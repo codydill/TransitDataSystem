@@ -1,9 +1,9 @@
 ﻿CREATE TABLE [Bus].[SpecialOnBoard] (
     [SpecialID]    UNIQUEIDENTIFIER CONSTRAINT [DF_Special] DEFAULT (newid()) NOT NULL,
-    [StopID]       UNIQUEIDENTIFIER NOT NULL,
+    [OnBoardID]       UNIQUEIDENTIFIER NOT NULL,
     [SpecialTag]   VARCHAR (75)     NOT NULL,
-    [SpecialCount] INT              NOT NULL,
+    [SpecialCount] INT              NULL,
     CONSTRAINT [PK_Special] PRIMARY KEY CLUSTERED ([SpecialID] ASC),
-    CONSTRAINT [FK_Stop] FOREIGN KEY ([StopID]) REFERENCES [Bus].[OnBoard] ([StopID])
+    CONSTRAINT [FK_OnBoardID_ToOnBoard] FOREIGN KEY ([OnBoardID]) REFERENCES [Bus].[OnBoard] ([OnBoardID])
 );
 

@@ -66,8 +66,12 @@
   <ItemGroup>
     <Build Include="Bus\Tables\OnBoard.sql" />
     <Build Include="Bus\Tables\SpecialOnBoard.sql" />
-    <Build Include="Bus\Tables\LocationDetails.sql" />
-    <Build Include="Bus\Tables\RouteDetails.sql" />
+    <Build Include="Bus\Tables\Locations.sql" />
+    <Build Include="Bus\Tables\Routes.sql" />
     <Build Include="Security\Bus.sql" />
+    <Build Include="Bus\Tables\Buses.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="TransitDatabase.refactorlog" />
   </ItemGroup>
 </Project>

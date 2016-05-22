@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="b1fa8bfd-7a60-4c06-9b0b-b6989eba9965" ChangeDateTime="05/22/2016 13:40:54">
+    <Property Name="ElementName" Value="[dbo].[BusDetails].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[BusDetails]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="BusID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0aaafccf-72c3-4c05-befd-9f63f7384331" ChangeDateTime="05/22/2016 13:42:43">
+    <Property Name="ElementName" Value="[Bus].[RouteDetails].[BusID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Bus].[RouteDetails]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RouteID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8dd48b0e-d513-4fd3-b2f7-76e825b075f1" ChangeDateTime="05/22/2016 13:43:46">
+    <Property Name="ElementName" Value="[Bus].[RouteDetails].[RouteID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Bus].[RouteDetails]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LocationPositionInRoute" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="bd68388a-b0b0-41a1-a5c4-cff69e1dd8b1" ChangeDateTime="05/22/2016 13:49:25">
+    <Property Name="ElementName" Value="[Bus].[FK_Bus]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[Bus].[OnBoard]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Bus_ToBusDetails]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f1ec6827-8010-4f2c-8fff-5937f2fca1d4" ChangeDateTime="05/22/2016 14:09:07">
+    <Property Name="ElementName" Value="[Bus].[FK_Location]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[Bus].[OnBoard]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Location_ToLocationDetails]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="49b13b59-84d8-4a64-b8cb-99406e534c30" ChangeDateTime="05/22/2016 14:15:33">
+    <Property Name="ElementName" Value="[Bus].[LocationDetails]" />
+    <Property Name="ElementType" Value="SqlTable" />
+    <Property Name="ParentElementName" Value="[Bus]" />
+    <Property Name="ParentElementType" Value="SqlSchema" />
+    <Property Name="NewName" Value="[Locations]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="76cba808-77f3-483e-827d-58dc2c17ec86" ChangeDateTime="05/22/2016 14:17:21">
+    <Property Name="ElementName" Value="[Bus].[BusDetails]" />
+    <Property Name="ElementType" Value="SqlTable" />
+    <Property Name="ParentElementName" Value="[Bus]" />
+    <Property Name="ParentElementType" Value="SqlSchema" />
+    <Property Name="NewName" Value="[Buses]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ff350a15-ac89-49fb-8f0d-628c6243efd5" ChangeDateTime="05/22/2016 14:17:54">
+    <Property Name="ElementName" Value="[Bus].[RouteDetails]" />
+    <Property Name="ElementType" Value="SqlTable" />
+    <Property Name="ParentElementName" Value="[Bus]" />
+    <Property Name="ParentElementType" Value="SqlSchema" />
+    <Property Name="NewName" Value="[Routes]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3a7e6f3c-8578-45b3-9b2a-002fc3194d2b" ChangeDateTime="05/22/2016 14:20:15">
+    <Property Name="ElementName" Value="[Bus].[OnBoard].[StopTimeStamp]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Bus].[OnBoard]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OnBoardTimeStamp" />
+  </Operation>
+</Operations>
