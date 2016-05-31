@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [Bus].[OnBoard] (
-    [OnBoardID]          INT CONSTRAINT [DF_Stop] DEFAULT (newid()) NOT NULL,
+    [OnBoardID]          INT  NOT NULL,
     [LocationID]      INT NOT NULL,
     [BusID]           INT NOT NULL,
     [OnBoardTimeStamp]   DATETIME2 (7)    NOT NULL,

@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [Bus].[SpecialOnBoard] (
-    [SpecialID]    INT CONSTRAINT [DF_Special] DEFAULT (newid()) NOT NULL,
+    [SpecialID]    INT  NOT NULL,
     [OnBoardID]       INT NOT NULL,
     [SpecialTag]   VARCHAR (75)     NOT NULL,
     [SpecialCount] TINYINT              NULL,
