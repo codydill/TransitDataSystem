@@ -64,12 +64,13 @@
     <Folder Include="Security\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Bus\Tables\OnBoard.sql" />
-    <Build Include="Bus\Tables\SpecialOnBoard.sql" />
+    <Build Include="Bus\Tables\OnBoards.sql" />
+    <Build Include="Bus\Tables\OnBoardDetails.sql" />
     <Build Include="Bus\Tables\Locations.sql" />
     <Build Include="Bus\Tables\Routes.sql" />
     <Build Include="Security\Bus.sql" />
     <Build Include="Bus\Tables\Buses.sql" />
+    <Build Include="Bus\Tables\Tags.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="TransitDatabase.refactorlog" />

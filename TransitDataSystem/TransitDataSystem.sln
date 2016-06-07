@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransitDataSystem", "Transi
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TransitDatabase", "TransitDatabase\TransitDatabase.sqlproj", "{F3981D11-A2AA-4458-A3E6-5E83737BCE19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransitDataTest", "TransitDataTest\TransitDataTest.csproj", "{1769C412-2797-4015-AE93-79BA5BD55546}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,10 +23,6 @@ Global
 		{F3981D11-A2AA-4458-A3E6-5E83737BCE19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3981D11-A2AA-4458-A3E6-5E83737BCE19}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F3981D11-A2AA-4458-A3E6-5E83737BCE19}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{1769C412-2797-4015-AE93-79BA5BD55546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1769C412-2797-4015-AE93-79BA5BD55546}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1769C412-2797-4015-AE93-79BA5BD55546}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1769C412-2797-4015-AE93-79BA5BD55546}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

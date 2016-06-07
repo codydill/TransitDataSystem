@@ -63,4 +63,39 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="OnBoardTimeStamp" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="9e8eaaf5-5b70-4797-8810-79b396fcc1bb" ChangeDateTime="06/07/2016 09:48:36">
+    <Property Name="ElementName" Value="[dbo].[Table1].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Table1]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TagId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="57d8e326-e042-4a89-a3a9-1f0289cb9547" ChangeDateTime="06/07/2016 09:49:22">
+    <Property Name="ElementName" Value="[Bus].[SpecialOnBoard].[SpecialCount]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Bus].[SpecialOnBoard]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Count" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="268c50f5-d574-438e-96cf-436268d3c76e" ChangeDateTime="06/07/2016 09:50:01">
+    <Property Name="ElementName" Value="[Bus].[SpecialOnBoard].[SpecialTag]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Bus].[SpecialOnBoard]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TagID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4dd4724e-7a05-4258-812c-a201f2757128" ChangeDateTime="06/07/2016 09:52:26">
+    <Property Name="ElementName" Value="[Bus].[SpecialOnBoard].[SpecialID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Bus].[SpecialOnBoard]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DetailID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="81ce763c-f4bd-4fb8-abb9-0ba707538ff2" ChangeDateTime="06/07/2016 09:54:01">
+    <Property Name="ElementName" Value="[Bus].[SpecialOnBoard].[DetailID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Bus].[SpecialOnBoard]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DetailsID" />
+  </Operation>
 </Operations>
