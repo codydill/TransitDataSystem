@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TransitDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="TransitDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Buses">
           <Key>
             <PropertyRef Name="BusID" />
@@ -20,7 +20,7 @@
           <Property Name="LocationAddress" Type="varchar" MaxLength="75" />
           <Property Name="LocationName" Type="varchar" MaxLength="75" />
         </EntityType>
-        <EntityType Name="OnBoard">
+        <EntityType Name="OnBoards">
           <Key>
             <PropertyRef Name="OnBoardID" />
           </Key>
@@ -28,10 +28,6 @@
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="BusID" Type="int" Nullable="false" />
           <Property Name="OnBoardTimeStamp" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="YouthOnBoard" Type="tinyint" />
-          <Property Name="AdultOnBoard" Type="tinyint" />
-          <Property Name="SeniorOnBoard" Type="tinyint" />
-          <Property Name="HandicapOnBoard" Type="tinyint" />
         </EntityType>
         <EntityType Name="Routes">
           <Key>
@@ -43,39 +39,42 @@
         </EntityType>
         <EntityType Name="SpecialOnBoard">
           <Key>
-            <PropertyRef Name="SpecialID" />
+            <PropertyRef Name="DetailsID" />
           </Key>
-          <Property Name="SpecialID" Type="int" Nullable="false" />
+          <Property Name="DetailsID" Type="int" Nullable="false" />
           <Property Name="OnBoardID" Type="int" Nullable="false" />
-          <Property Name="SpecialTag" Type="varchar" MaxLength="75" Nullable="false" />
-          <Property Name="SpecialCount" Type="tinyint" />
+          <Property Name="TagID" Type="int" Nullable="false" />
+          <Property Name="Count" Type="tinyint" Nullable="false" />
         </EntityType>
-        <EntityType Name="__RefactorLog">
+        <EntityType Name="Tags">
           <Key>
-            <PropertyRef Name="OperationKey" />
+            <PropertyRef Name="TagId" />
           </Key>
-          <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TagId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="75" Nullable="false" />
+          <Property Name="BeginDate" Type="datetime2" Precision="7" />
+          <Property Name="EndDate" Type="datetime2" Precision="7" />
         </EntityType>
         <Association Name="FK_Bus_ToBuses">
           <End Role="Buses" Type="Self.Buses" Multiplicity="1" />
-          <End Role="OnBoard" Type="Self.OnBoard" Multiplicity="*" />
+          <End Role="OnBoards" Type="Self.OnBoards" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Buses">
               <PropertyRef Name="BusID" />
             </Principal>
-            <Dependent Role="OnBoard">
+            <Dependent Role="OnBoards">
               <PropertyRef Name="BusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Location_ToLocations">
           <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
-          <End Role="OnBoard" Type="Self.OnBoard" Multiplicity="*" />
+          <End Role="OnBoards" Type="Self.OnBoards" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Locations">
               <PropertyRef Name="LocationID" />
             </Principal>
-            <Dependent Role="OnBoard">
+            <Dependent Role="OnBoards">
               <PropertyRef Name="LocationID" />
             </Dependent>
           </ReferentialConstraint>
@@ -92,11 +91,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OnBoardID_ToOnBoard">
-          <End Role="OnBoard" Type="Self.OnBoard" Multiplicity="1" />
+        <Association Name="FK_OnBoardID_ToOnBoards">
+          <End Role="OnBoards" Type="Self.OnBoards" Multiplicity="1" />
           <End Role="SpecialOnBoard" Type="Self.SpecialOnBoard" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="OnBoard">
+            <Principal Role="OnBoards">
               <PropertyRef Name="OnBoardID" />
             </Principal>
             <Dependent Role="SpecialOnBoard">
@@ -116,46 +115,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="TransitDataModelStoreContainer">
+        <Association Name="FK_TagId_ToTags">
+          <End Role="Tags" Type="Self.Tags" Multiplicity="1" />
+          <End Role="SpecialOnBoard" Type="Self.SpecialOnBoard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="SpecialOnBoard">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TransitDBModelStoreContainer">
           <EntitySet Name="Buses" EntityType="Self.Buses" Schema="Bus" store:Type="Tables" />
           <EntitySet Name="Locations" EntityType="Self.Locations" Schema="Bus" store:Type="Tables" />
-          <EntitySet Name="OnBoard" EntityType="Self.OnBoard" Schema="Bus" store:Type="Tables" />
+          <EntitySet Name="OnBoards" EntityType="Self.OnBoards" Schema="Bus" store:Type="Tables" />
           <EntitySet Name="Routes" EntityType="Self.Routes" Schema="Bus" store:Type="Tables" />
           <EntitySet Name="SpecialOnBoard" EntityType="Self.SpecialOnBoard" Schema="Bus" store:Type="Tables" />
-          <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tags" EntityType="Self.Tags" Schema="Bus" store:Type="Tables" />
           <AssociationSet Name="FK_Bus_ToBuses" Association="Self.FK_Bus_ToBuses">
             <End Role="Buses" EntitySet="Buses" />
-            <End Role="OnBoard" EntitySet="OnBoard" />
+            <End Role="OnBoards" EntitySet="OnBoards" />
           </AssociationSet>
           <AssociationSet Name="FK_Location_ToLocations" Association="Self.FK_Location_ToLocations">
             <End Role="Locations" EntitySet="Locations" />
-            <End Role="OnBoard" EntitySet="OnBoard" />
+            <End Role="OnBoards" EntitySet="OnBoards" />
           </AssociationSet>
           <AssociationSet Name="FK_LocationID_ToLocations" Association="Self.FK_LocationID_ToLocations">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="Routes" EntitySet="Routes" />
           </AssociationSet>
-          <AssociationSet Name="FK_OnBoardID_ToOnBoard" Association="Self.FK_OnBoardID_ToOnBoard">
-            <End Role="OnBoard" EntitySet="OnBoard" />
+          <AssociationSet Name="FK_OnBoardID_ToOnBoards" Association="Self.FK_OnBoardID_ToOnBoards">
+            <End Role="OnBoards" EntitySet="OnBoards" />
             <End Role="SpecialOnBoard" EntitySet="SpecialOnBoard" />
           </AssociationSet>
           <AssociationSet Name="FK_RouteID_ToRoutes" Association="Self.FK_RouteID_ToRoutes">
             <End Role="Routes" EntitySet="Routes" />
             <End Role="Buses" EntitySet="Buses" />
           </AssociationSet>
+          <AssociationSet Name="FK_TagId_ToTags" Association="Self.FK_TagId_ToTags">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="SpecialOnBoard" EntitySet="SpecialOnBoard" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="TransitDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="TransitDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Bus">
           <Key>
             <PropertyRef Name="BusID" />
           </Key>
           <Property Name="BusID" Type="Int32" Nullable="false" />
           <Property Name="RouteID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="OnBoards" Relationship="Self.FK_Bus_ToBuses" FromRole="Buses" ToRole="OnBoard" />
+          <NavigationProperty Name="OnBoards" Relationship="Self.FK_Bus_ToBuses" FromRole="Buses" ToRole="OnBoards" />
           <NavigationProperty Name="Route" Relationship="Self.FK_RouteID_ToRoutes" FromRole="Buses" ToRole="Routes" />
         </EntityType>
         <EntityType Name="Location">
@@ -165,7 +180,7 @@
           <Property Name="LocationID" Type="Int32" Nullable="false" />
           <Property Name="LocationAddress" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
           <Property Name="LocationName" Type="String" MaxLength="75" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="OnBoards" Relationship="Self.FK_Location_ToLocations" FromRole="Locations" ToRole="OnBoard" />
+          <NavigationProperty Name="OnBoards" Relationship="Self.FK_Location_ToLocations" FromRole="Locations" ToRole="OnBoards" />
           <NavigationProperty Name="Routes" Relationship="Self.FK_LocationID_ToLocations" FromRole="Locations" ToRole="Routes" />
         </EntityType>
         <EntityType Name="OnBoard">
@@ -176,13 +191,9 @@
           <Property Name="LocationID" Type="Int32" Nullable="false" />
           <Property Name="BusID" Type="Int32" Nullable="false" />
           <Property Name="OnBoardTimeStamp" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="YouthOnBoard" Type="Byte" />
-          <Property Name="AdultOnBoard" Type="Byte" />
-          <Property Name="SeniorOnBoard" Type="Byte" />
-          <Property Name="HandicapOnBoard" Type="Byte" />
-          <NavigationProperty Name="Bus" Relationship="Self.FK_Bus_ToBuses" FromRole="OnBoard" ToRole="Buses" />
-          <NavigationProperty Name="Location" Relationship="Self.FK_Location_ToLocations" FromRole="OnBoard" ToRole="Locations" />
-          <NavigationProperty Name="SpecialOnBoards" Relationship="Self.FK_OnBoardID_ToOnBoard" FromRole="OnBoard" ToRole="SpecialOnBoard" />
+          <NavigationProperty Name="Bus" Relationship="Self.FK_Bus_ToBuses" FromRole="OnBoards" ToRole="Buses" />
+          <NavigationProperty Name="Location" Relationship="Self.FK_Location_ToLocations" FromRole="OnBoards" ToRole="Locations" />
+          <NavigationProperty Name="SpecialOnBoards" Relationship="Self.FK_OnBoardID_ToOnBoards" FromRole="OnBoards" ToRole="SpecialOnBoard" />
         </EntityType>
         <EntityType Name="Route">
           <Key>
@@ -196,28 +207,33 @@
         </EntityType>
         <EntityType Name="SpecialOnBoard">
           <Key>
-            <PropertyRef Name="SpecialID" />
+            <PropertyRef Name="DetailsID" />
           </Key>
-          <Property Name="SpecialID" Type="Int32" Nullable="false" />
+          <Property Name="DetailsID" Type="Int32" Nullable="false" />
           <Property Name="OnBoardID" Type="Int32" Nullable="false" />
-          <Property Name="SpecialTag" Type="String" MaxLength="75" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SpecialCount" Type="Byte" />
-          <NavigationProperty Name="OnBoard" Relationship="Self.FK_OnBoardID_ToOnBoard" FromRole="SpecialOnBoard" ToRole="OnBoard" />
+          <Property Name="TagID" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="OnBoard" Relationship="Self.FK_OnBoardID_ToOnBoards" FromRole="SpecialOnBoard" ToRole="OnBoards" />
+          <NavigationProperty Name="Tag" Relationship="Self.FK_TagId_ToTags" FromRole="SpecialOnBoard" ToRole="Tags" />
         </EntityType>
-        <EntityType Name="C__RefactorLog">
+        <EntityType Name="Tag">
           <Key>
-            <PropertyRef Name="OperationKey" />
+            <PropertyRef Name="TagId" />
           </Key>
-          <Property Name="OperationKey" Type="Guid" Nullable="false" />
+          <Property Name="TagId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="75" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="BeginDate" Type="DateTime" Precision="7" />
+          <Property Name="EndDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="SpecialOnBoards" Relationship="Self.FK_TagId_ToTags" FromRole="Tags" ToRole="SpecialOnBoard" />
         </EntityType>
         <Association Name="FK_Bus_ToBuses">
           <End Role="Buses" Type="Self.Bus" Multiplicity="1" />
-          <End Role="OnBoard" Type="Self.OnBoard" Multiplicity="*" />
+          <End Role="OnBoards" Type="Self.OnBoard" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Buses">
               <PropertyRef Name="BusID" />
             </Principal>
-            <Dependent Role="OnBoard">
+            <Dependent Role="OnBoards">
               <PropertyRef Name="BusID" />
             </Dependent>
           </ReferentialConstraint>
@@ -236,12 +252,12 @@
         </Association>
         <Association Name="FK_Location_ToLocations">
           <End Role="Locations" Type="Self.Location" Multiplicity="1" />
-          <End Role="OnBoard" Type="Self.OnBoard" Multiplicity="*" />
+          <End Role="OnBoards" Type="Self.OnBoard" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Locations">
               <PropertyRef Name="LocationID" />
             </Principal>
-            <Dependent Role="OnBoard">
+            <Dependent Role="OnBoards">
               <PropertyRef Name="LocationID" />
             </Dependent>
           </ReferentialConstraint>
@@ -258,11 +274,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OnBoardID_ToOnBoard">
-          <End Role="OnBoard" Type="Self.OnBoard" Multiplicity="1" />
+        <Association Name="FK_OnBoardID_ToOnBoards">
+          <End Role="OnBoards" Type="Self.OnBoard" Multiplicity="1" />
           <End Role="SpecialOnBoard" Type="Self.SpecialOnBoard" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="OnBoard">
+            <Principal Role="OnBoards">
               <PropertyRef Name="OnBoardID" />
             </Principal>
             <Dependent Role="SpecialOnBoard">
@@ -270,16 +286,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="TransitDataEntities" annotation:LazyLoadingEnabled="true">
+        <Association Name="FK_TagId_ToTags">
+          <End Role="Tags" Type="Self.Tag" Multiplicity="1" />
+          <End Role="SpecialOnBoard" Type="Self.SpecialOnBoard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="SpecialOnBoard">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TransitDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Buses" EntityType="Self.Bus" />
           <EntitySet Name="Locations" EntityType="Self.Location" />
           <EntitySet Name="OnBoards" EntityType="Self.OnBoard" />
           <EntitySet Name="Routes" EntityType="Self.Route" />
           <EntitySet Name="SpecialOnBoards" EntityType="Self.SpecialOnBoard" />
-          <EntitySet Name="C__RefactorLog" EntityType="Self.C__RefactorLog" />
+          <EntitySet Name="Tags" EntityType="Self.Tag" />
           <AssociationSet Name="FK_Bus_ToBuses" Association="Self.FK_Bus_ToBuses">
             <End Role="Buses" EntitySet="Buses" />
-            <End Role="OnBoard" EntitySet="OnBoards" />
+            <End Role="OnBoards" EntitySet="OnBoards" />
           </AssociationSet>
           <AssociationSet Name="FK_RouteID_ToRoutes" Association="Self.FK_RouteID_ToRoutes">
             <End Role="Routes" EntitySet="Routes" />
@@ -287,14 +315,18 @@
           </AssociationSet>
           <AssociationSet Name="FK_Location_ToLocations" Association="Self.FK_Location_ToLocations">
             <End Role="Locations" EntitySet="Locations" />
-            <End Role="OnBoard" EntitySet="OnBoards" />
+            <End Role="OnBoards" EntitySet="OnBoards" />
           </AssociationSet>
           <AssociationSet Name="FK_LocationID_ToLocations" Association="Self.FK_LocationID_ToLocations">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="Routes" EntitySet="Routes" />
           </AssociationSet>
-          <AssociationSet Name="FK_OnBoardID_ToOnBoard" Association="Self.FK_OnBoardID_ToOnBoard">
-            <End Role="OnBoard" EntitySet="OnBoards" />
+          <AssociationSet Name="FK_OnBoardID_ToOnBoards" Association="Self.FK_OnBoardID_ToOnBoards">
+            <End Role="OnBoards" EntitySet="OnBoards" />
+            <End Role="SpecialOnBoard" EntitySet="SpecialOnBoards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TagId_ToTags" Association="Self.FK_TagId_ToTags">
+            <End Role="Tags" EntitySet="Tags" />
             <End Role="SpecialOnBoard" EntitySet="SpecialOnBoards" />
           </AssociationSet>
         </EntityContainer>
@@ -303,9 +335,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TransitDataModelStoreContainer" CdmEntityContainer="TransitDataEntities">
+        <EntityContainerMapping StorageEntityContainer="TransitDBModelStoreContainer" CdmEntityContainer="TransitDBEntities">
           <EntitySetMapping Name="Buses">
-            <EntityTypeMapping TypeName="TransitDataModel.Bus">
+            <EntityTypeMapping TypeName="TransitDBModel.Bus">
               <MappingFragment StoreEntitySet="Buses">
                 <ScalarProperty Name="BusID" ColumnName="BusID" />
                 <ScalarProperty Name="RouteID" ColumnName="RouteID" />
@@ -313,7 +345,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Locations">
-            <EntityTypeMapping TypeName="TransitDataModel.Location">
+            <EntityTypeMapping TypeName="TransitDBModel.Location">
               <MappingFragment StoreEntitySet="Locations">
                 <ScalarProperty Name="LocationID" ColumnName="LocationID" />
                 <ScalarProperty Name="LocationAddress" ColumnName="LocationAddress" />
@@ -322,21 +354,17 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OnBoards">
-            <EntityTypeMapping TypeName="TransitDataModel.OnBoard">
-              <MappingFragment StoreEntitySet="OnBoard">
+            <EntityTypeMapping TypeName="TransitDBModel.OnBoard">
+              <MappingFragment StoreEntitySet="OnBoards">
                 <ScalarProperty Name="OnBoardID" ColumnName="OnBoardID" />
                 <ScalarProperty Name="LocationID" ColumnName="LocationID" />
                 <ScalarProperty Name="BusID" ColumnName="BusID" />
                 <ScalarProperty Name="OnBoardTimeStamp" ColumnName="OnBoardTimeStamp" />
-                <ScalarProperty Name="YouthOnBoard" ColumnName="YouthOnBoard" />
-                <ScalarProperty Name="AdultOnBoard" ColumnName="AdultOnBoard" />
-                <ScalarProperty Name="SeniorOnBoard" ColumnName="SeniorOnBoard" />
-                <ScalarProperty Name="HandicapOnBoard" ColumnName="HandicapOnBoard" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Routes">
-            <EntityTypeMapping TypeName="TransitDataModel.Route">
+            <EntityTypeMapping TypeName="TransitDBModel.Route">
               <MappingFragment StoreEntitySet="Routes">
                 <ScalarProperty Name="RouteID" ColumnName="RouteID" />
                 <ScalarProperty Name="LocationID" ColumnName="LocationID" />
@@ -345,19 +373,22 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SpecialOnBoards">
-            <EntityTypeMapping TypeName="TransitDataModel.SpecialOnBoard">
+            <EntityTypeMapping TypeName="TransitDBModel.SpecialOnBoard">
               <MappingFragment StoreEntitySet="SpecialOnBoard">
-                <ScalarProperty Name="SpecialID" ColumnName="SpecialID" />
+                <ScalarProperty Name="DetailsID" ColumnName="DetailsID" />
                 <ScalarProperty Name="OnBoardID" ColumnName="OnBoardID" />
-                <ScalarProperty Name="SpecialTag" ColumnName="SpecialTag" />
-                <ScalarProperty Name="SpecialCount" ColumnName="SpecialCount" />
+                <ScalarProperty Name="TagID" ColumnName="TagID" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="C__RefactorLog">
-            <EntityTypeMapping TypeName="TransitDataModel.C__RefactorLog">
-              <MappingFragment StoreEntitySet="__RefactorLog">
-                <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="TransitDBModel.Tag">
+              <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

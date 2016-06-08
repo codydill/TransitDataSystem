@@ -12,21 +12,19 @@ namespace TransitDataSystem
     using System;
     using System.Collections.Generic;
     
-    public partial class OnBoard
+    public partial class Tag
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OnBoard()
+        public Tag()
         {
             this.SpecialOnBoards = new HashSet<SpecialOnBoard>();
         }
     
-        public int OnBoardID { get; set; }
-        public int LocationID { get; set; }
-        public int BusID { get; set; }
-        public System.DateTime OnBoardTimeStamp { get; set; }
+        public int TagId { get; set; }
+        public string Description { get; set; }
+        public Nullable<System.DateTime> BeginDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
     
-        public virtual Bus Bus { get; set; }
-        public virtual Location Location { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SpecialOnBoard> SpecialOnBoards { get; set; }
     }

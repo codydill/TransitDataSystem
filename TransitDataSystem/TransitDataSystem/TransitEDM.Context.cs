@@ -13,10 +13,10 @@ namespace TransitDataSystem
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TransitDataEntities : DbContext
+    public partial class TransitDBEntities : DbContext
     {
-        public TransitDataEntities()
-            : base("name=TransitDataEntities")
+        public TransitDBEntities()
+            : base("name=TransitDBEntities")
         {
         }
     
@@ -30,6 +30,6 @@ namespace TransitDataSystem
         public virtual DbSet<OnBoard> OnBoards { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
         public virtual DbSet<SpecialOnBoard> SpecialOnBoards { get; set; }
-        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
     }
 }

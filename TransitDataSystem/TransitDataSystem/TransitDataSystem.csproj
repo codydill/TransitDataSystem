@@ -52,68 +52,66 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bus.cs">
-      <DependentUpon>TransitDataModel.tt</DependentUpon>
+      <DependentUpon>TransitEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
-    <Compile Include="C__RefactorLog.cs">
-      <DependentUpon>TransitDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Location.cs">
-      <DependentUpon>TransitDataModel.tt</DependentUpon>
+      <DependentUpon>TransitEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="OnBoard.cs">
-      <DependentUpon>TransitDataModel.tt</DependentUpon>
+      <DependentUpon>TransitEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Route.cs">
-      <DependentUpon>TransitDataModel.tt</DependentUpon>
+      <DependentUpon>TransitEDM.tt</DependentUpon>
     </Compile>
     <Compile Include="SpecialOnBoard.cs">
-      <DependentUpon>TransitDataModel.tt</DependentUpon>
+      <DependentUpon>TransitEDM.tt</DependentUpon>
     </Compile>
-    <Compile Include="TransitDataModel.Context.cs">
+    <Compile Include="Tag.cs">
+      <DependentUpon>TransitEDM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TransitEDM.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TransitDataModel.Context.tt</DependentUpon>
+      <DependentUpon>TransitEDM.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="TransitDataModel.cs">
+    <Compile Include="TransitEDM.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TransitDataModel.tt</DependentUpon>
+      <DependentUpon>TransitEDM.tt</DependentUpon>
     </Compile>
-    <Compile Include="TransitDataModel.Designer.cs">
+    <Compile Include="TransitEDM.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TransitDataModel.edmx</DependentUpon>
+      <DependentUpon>TransitEDM.edmx</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="TransitDataModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TransitDataModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
     <None Include="packages.config" />
-    <None Include="TransitDataModel.edmx.diagram">
-      <DependentUpon>TransitDataModel.edmx</DependentUpon>
+    <EntityDeploy Include="TransitEDM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TransitEDM.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="TransitEDM.edmx.diagram">
+      <DependentUpon>TransitEDM.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TransitDataModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TransitDataModel.edmx</DependentUpon>
-      <LastGenOutput>TransitDataModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="TransitDataModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TransitDataModel.edmx</DependentUpon>
-      <LastGenOutput>TransitDataModel.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="TransitEDM.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TransitEDM.edmx</DependentUpon>
+      <LastGenOutput>TransitEDM.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="TransitEDM.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TransitEDM.edmx</DependentUpon>
+      <LastGenOutput>TransitEDM.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

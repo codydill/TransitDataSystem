@@ -14,11 +14,12 @@ namespace TransitDataSystem
     
     public partial class SpecialOnBoard
     {
-        public int SpecialID { get; set; }
+        public int DetailsID { get; set; }
         public int OnBoardID { get; set; }
-        public string SpecialTag { get; set; }
-        public Nullable<byte> SpecialCount { get; set; }
+        public int TagID { get; set; }
+        public byte Count { get; set; }
     
         public virtual OnBoard OnBoard { get; set; }
+        public virtual Tag Tag { get; set; }
     }
 }
