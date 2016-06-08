@@ -18,8 +18,7 @@ namespace TransitASP.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int RouteID { get; set; }
 
-        [StringLength(75)]
-        public string RouteName { get; set; }
+        public string RouteName { get;  set;}
 
         public int LocationID { get; set; }
 

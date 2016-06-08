@@ -18,6 +18,8 @@ namespace TransitASP.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int BusID { get; set; }
 
+        public string BusName { get; set; }
+
         public string RouteName { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
