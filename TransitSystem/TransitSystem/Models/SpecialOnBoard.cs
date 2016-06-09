@@ -10,7 +10,7 @@ namespace TransitSystem.Models
     public partial class SpecialOnBoard
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DetailsID { get; set; }
 
         public int OnBoardID { get; set; }

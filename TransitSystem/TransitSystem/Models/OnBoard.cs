@@ -15,7 +15,7 @@ namespace TransitSystem.Models
             SpecialOnBoards = new HashSet<SpecialOnBoard>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OnBoardID { get; set; }
 
         public int LocationID { get; set; }

@@ -15,7 +15,7 @@ namespace TransitSystem.Models
             Buses = new HashSet<Bus>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RouteID { get; set; }
 
         public string RouteName { get;  set;}

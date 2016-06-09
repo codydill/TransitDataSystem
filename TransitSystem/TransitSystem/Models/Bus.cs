@@ -15,7 +15,7 @@ namespace TransitSystem.Models
             OnBoards = new HashSet<OnBoard>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BusID { get; set; }
 
         public string BusName { get; set; }
