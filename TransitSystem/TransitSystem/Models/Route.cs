@@ -13,6 +13,7 @@ namespace TransitSystem.Models
         public Route()
         {
             Buses = new HashSet<Bus>();
+            Locations = new HashSet<Location>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -27,6 +28,7 @@ namespace TransitSystem.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bus> Buses { get; set; }
 
-        public virtual Location Location { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Location> Locations { get; set; }
     }
 }

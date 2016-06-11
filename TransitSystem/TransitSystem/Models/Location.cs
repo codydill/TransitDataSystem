@@ -19,6 +19,8 @@ namespace TransitSystem.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int LocationID { get; set; }
 
+        public int RouteID { get; set; }
+
         [StringLength(75)]
         public string Address { get; set; }
 

@@ -12,10 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Location.Address)
+            @Html.DisplayNameFor(model => model.RouteName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RouteName)
+            @Html.DisplayNameFor(model => model.LocationID)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.LocationPositionInRoute)
@@ -26,10 +26,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Location.Address)
+            @Html.DisplayFor(modelItem => item.RouteName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RouteName)
+            @Html.DisplayFor(modelItem => item.LocationID)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.LocationPositionInRoute)

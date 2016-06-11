@@ -18,8 +18,7 @@ namespace TransitSystem.Controllers
         // GET: Route
         public ActionResult Index()
         {
-            var routes = db.Routes.Include(r => r.Location);
-            return View(routes.ToList());
+            return View(db.Routes.ToList());
         }
 
         // GET: Route/Details/5
@@ -40,7 +39,6 @@ namespace TransitSystem.Controllers
         // GET: Route/Create
         public ActionResult Create()
         {
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Address");
             return View();
         }
 
@@ -58,7 +56,6 @@ namespace TransitSystem.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Address", route.LocationID);
             return View(route);
         }
 
@@ -74,7 +71,6 @@ namespace TransitSystem.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Address", route.LocationID);
             return View(route);
         }
 
@@ -91,7 +87,6 @@ namespace TransitSystem.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Address", route.LocationID);
             return View(route);
         }
 

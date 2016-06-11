@@ -5,6 +5,7 @@ namespace TransitSystem.DAL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using TransitSystem.Models;
+    using System.Data.Entity.ModelConfiguration.Conventions;
 
     public partial class TransitContext : DbContext
     {
@@ -22,47 +23,7 @@ namespace TransitSystem.DAL
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Bus>()
-                .HasMany(e => e.OnBoards)
-                .WithRequired(e => e.Bus)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Location>()
-                .Property(e => e.Address)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Location>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Location>()
-                .HasMany(e => e.OnBoards)
-                .WithRequired(e => e.Location)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Location>()
-                .HasMany(e => e.Routes)
-                .WithRequired(e => e.Location)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<OnBoard>()
-                .HasMany(e => e.SpecialOnBoards)
-                .WithRequired(e => e.OnBoard)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Route>()
-                .HasMany(e => e.Buses)
-                .WithRequired(e => e.Route)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Tag>()
-                .Property(e => e.Description)
-                .IsFixedLength();
-
-            modelBuilder.Entity<Tag>()
-                .HasMany(e => e.SpecialOnBoards)
-                .WithRequired(e => e.Tag)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
     }
 }
