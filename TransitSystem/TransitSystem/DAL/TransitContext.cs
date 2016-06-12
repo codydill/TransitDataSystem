@@ -14,11 +14,11 @@ namespace TransitSystem.DAL
         {
         }
 
-        public virtual DbSet<Bus> Buses { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<OnBoard> OnBoards { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
-        public virtual DbSet<SpecialOnBoard> SpecialOnBoards { get; set; }
+        public virtual DbSet<OnBoardDetail> OnBoardDetails { get; set; }
+        public virtual DbSet<RouteDetail> RouteDetails { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

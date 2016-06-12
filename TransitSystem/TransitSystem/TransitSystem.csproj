@@ -130,17 +130,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
-    <Compile Include="Controllers\RouteController.cs" />
     <Compile Include="DAL\TransitContext.cs" />
     <Compile Include="DAL\TransitInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Bus.cs" />
+    <Compile Include="Models\RouteDetail.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\OnBoard.cs" />
     <Compile Include="Models\Route.cs" />
-    <Compile Include="Models\SpecialOnBoard.cs" />
+    <Compile Include="Models\OnBoardDetail.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -186,11 +185,6 @@
     <Content Include="Views\Location\Details.cshtml" />
     <Content Include="Views\Location\Edit.cshtml" />
     <Content Include="Views\Location\Index.cshtml" />
-    <Content Include="Views\Route\Create.cshtml" />
-    <Content Include="Views\Route\Delete.cshtml" />
-    <Content Include="Views\Route\Details.cshtml" />
-    <Content Include="Views\Route\Edit.cshtml" />
-    <Content Include="Views\Route\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

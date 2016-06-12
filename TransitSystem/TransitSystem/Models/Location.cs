@@ -13,13 +13,11 @@ namespace TransitSystem.Models
         public Location()
         {
             OnBoards = new HashSet<OnBoard>();
-            Routes = new HashSet<Route>();
+            RouteDetails = new HashSet<RouteDetail>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int LocationID { get; set; }
-
-        public int RouteID { get; set; }
 
         [StringLength(75)]
         public string Address { get; set; }
@@ -31,6 +29,7 @@ namespace TransitSystem.Models
         public virtual ICollection<OnBoard> OnBoards { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Route> Routes { get; set; }
+        public virtual ICollection<RouteDetail> RouteDetails { get; set; }
+
     }
 }

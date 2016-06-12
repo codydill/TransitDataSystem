@@ -12,7 +12,7 @@ namespace TransitSystem.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public OnBoard()
         {
-            SpecialOnBoards = new HashSet<SpecialOnBoard>();
+            OnBoardDetail = new HashSet<OnBoardDetail>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -20,16 +20,16 @@ namespace TransitSystem.Models
 
         public int LocationID { get; set; }
 
-        public int BusID { get; set; }
+        public int RouteID { get; set; }
 
         [Column(TypeName = "datetime2")]
         public DateTime OnBoardTimeStamp { get; set; }
 
-        public virtual Bus Bus { get; set; }
+        public virtual Route Route { get; set; }
 
         public virtual Location Location { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SpecialOnBoard> SpecialOnBoards { get; set; }
+        public virtual ICollection<OnBoardDetail> OnBoardDetail { get; set; }
     }
 }

@@ -6,8 +6,8 @@ namespace TransitSystem.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Bus.SpecialOnBoard")]
-    public partial class SpecialOnBoard
+    [Table("Bus.OnBoardDetails")]
+    public partial class OnBoardDetail
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

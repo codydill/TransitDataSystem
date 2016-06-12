@@ -12,7 +12,7 @@ namespace TransitSystem.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tag()
         {
-            SpecialOnBoards = new HashSet<SpecialOnBoard>();
+            OnBoardDetail = new HashSet<OnBoardDetail>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -29,6 +29,6 @@ namespace TransitSystem.Models
         public DateTime? EndDate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SpecialOnBoard> SpecialOnBoards { get; set; }
+        public virtual ICollection<OnBoardDetail> OnBoardDetail { get; set; }
     }
 }
