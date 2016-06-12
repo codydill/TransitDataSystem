@@ -129,6 +129,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TagController.cs" />
     <Compile Include="DAL\TransitContext.cs" />
     <Compile Include="DAL\TransitInitializer.cs" />
     <Compile Include="Global.asax.cs">
@@ -179,6 +180,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Tag\Create.cshtml" />
+    <Content Include="Views\Tag\Delete.cshtml" />
+    <Content Include="Views\Tag\Edit.cshtml" />
+    <Content Include="Views\Tag\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

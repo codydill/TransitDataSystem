@@ -15,7 +15,7 @@ namespace TransitSystem.Models
             OnBoardDetail = new HashSet<OnBoardDetail>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TagId { get; set; }
 
         [Required]

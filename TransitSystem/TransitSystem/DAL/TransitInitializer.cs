@@ -11,9 +11,18 @@ namespace TransitSystem.DAL
     {
         protected override void Seed(TransitContext context)
         {
+            var tags = new List<Tag>
+            {
+                new Tag { Description = "Adult", Current = true },
+                new Tag { Description = "Youth", Current = true },
+                new Tag { Description = "Pool Reduced", Current = false }
+            };
+            tags.ForEach(t => context.Tags.Add(t));
+            context.SaveChanges();
+
             var locations = new List<Location>
             {
-                new Location { Name = "Transit Station", Address = "North 6th Avenue"},
+                new Location { Name = "Transit Station", Address = "North 6th Avenue" },
                 new Location { Name = "Walmart", Address = "South 16th Street" },
                 new Location { Name = "Hospital", Address = "Bend Avenue" },
                 new Location { Name = "Safeway", Address = "South 1st Street" },
@@ -26,14 +35,6 @@ namespace TransitSystem.DAL
             locations.ForEach(l => context.Locations.Add(l));
             context.SaveChanges();
 
-            //var routes = new List<Route>
-            //{
-            //    new Route { RouteName = "West Valley Route", LocationID = locations.Find(x => x.LocationID == 1).LocationID, LocationPositionInRoute = 0},
-            //    new Route { RouteName = "West Valley Route", LocationID = locations.Find(x => x.LocationID == 3).LocationID, LocationPositionInRoute = 1},
-            //    new Route { RouteName = "West Valley Route", LocationID = locations.Find(x => x.LocationID == 5).LocationID, LocationPositionInRoute = 2}
-            //};
-            //routes.ForEach(l => context.Routes.Add(l));
-            //context.SaveChanges();
         }
     }
 }
