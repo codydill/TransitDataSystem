@@ -9,10 +9,16 @@
 <p>
     @Html.ActionLink("Add New Location", "Create")
 </p>
+
+@using (Html.BeginForm())
+{
+    <p>@Html.TextBox("SearchString")
+        <input type="submit" value="Search" /></p>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParam})
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Address)

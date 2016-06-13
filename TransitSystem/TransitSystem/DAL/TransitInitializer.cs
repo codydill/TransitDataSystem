@@ -7,7 +7,7 @@ using TransitSystem.Models;
 
 namespace TransitSystem.DAL
 {
-    public class TransitInitializer : System.Data.Entity.DropCreateDatabaseAlways<TransitContext>
+    public class TransitInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<TransitContext>
     {
         protected override void Seed(TransitContext context)
         {
@@ -34,6 +34,11 @@ namespace TransitSystem.DAL
             };
             locations.ForEach(l => context.Locations.Add(l));
             context.SaveChanges();
+
+            //var routes = new List<Route>
+            //{
+            //    new Route { RouteName = "West Valley Loop", }
+            //};
 
         }
     }

@@ -16,9 +16,26 @@ namespace TransitSystem.Controllers
         private TransitContext db = new TransitContext();
 
         // GET: Location
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string searchString)
         {
-            return View(db.Locations.ToList());
+            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            var locations = from l in db.Locations select l;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                locations = locations.Where(s => s.Name.Contains(searchString) || s.Address.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    locations = locations.OrderByDescending(s => s.Name);
+                    break;
+                default:
+                    locations = locations.OrderBy(s => s.Name);
+                    break;
+            }
+            return View(locations.ToList());
         }
 
         // GET: Location/Details/5
