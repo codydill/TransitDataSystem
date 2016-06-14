@@ -12,7 +12,7 @@ namespace TransitSystem.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Route()
         {
-            Locations = new HashSet<Location>();
+            OnBoards = new HashSet<OnBoard>();
             RouteDetails = new HashSet<RouteDetail>();
         }
 
@@ -23,7 +23,7 @@ namespace TransitSystem.Models
 
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Location> Locations { get; set; }
+        public virtual ICollection<OnBoard> OnBoards { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RouteDetail> RouteDetails { get; set; }

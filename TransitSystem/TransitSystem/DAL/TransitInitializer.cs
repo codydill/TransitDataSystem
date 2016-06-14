@@ -7,7 +7,7 @@ using TransitSystem.Models;
 
 namespace TransitSystem.DAL
 {
-    public class TransitInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<TransitContext>
+    public class TransitInitializer : System.Data.Entity.DropCreateDatabaseAlways<TransitContext>
     {
         protected override void Seed(TransitContext context)
         {
