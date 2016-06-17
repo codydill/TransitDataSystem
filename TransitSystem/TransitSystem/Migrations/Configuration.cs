@@ -47,21 +47,27 @@ namespace TransitSystem.Migrations
 
             var routes = new List<Route>
             {
-                new Route { RouteID = 5, RouteName = "Food Route" },
-                new Route { RouteID = 7, RouteName = "Monetary Route" },
-                new Route { RouteID = 11, RouteName = "Medical Route" }
+                new Route { RouteName = "Food Route" },
+                new Route { RouteName = "Monetary Route" },
+                new Route { RouteName = "Medical Route" }
             };
             routes.ForEach(r => context.Routes.AddOrUpdate(d => d.RouteName, r));
             context.SaveChanges();
 
-            var routeDetails = new List<RouteDetail>
-            {
-                new RouteDetail { Position = 0,
-                    LocationID = 1,
-                    RouteID = 5}
-            };
-            routeDetails.ForEach(r => context.RouteDetails.AddOrUpdate(d => d.RouteDetailID, r));
-            context.SaveChanges();
+            //routes[1].AddLocations(locations);
+            //context.SaveChanges();
+
+            //routes[1].RemoveLocations();
+            //context.SaveChanges();
+
+            //var routeDetails = new List<RouteDetail>
+            //{
+            //    new RouteDetail { Position = 0,
+            //        LocationID = 1,
+            //        RouteID = 5}
+            //};
+            //routeDetails.ForEach(r => context.RouteDetails.AddOrUpdate(d => d.RouteDetailID, r));
+            //context.SaveChanges();
 
 
 
@@ -71,13 +77,31 @@ namespace TransitSystem.Migrations
             //context.Configuration.AutoDetectChangesEnabled = false;
             //context.Configuration.ValidateOnSaveEnabled = false;
         }
-        public void AddLocationsToRoute(TransitSystem.DAL.TransitContext context, Route route, List<Location> locations)
-        {
-            byte i = 0;
-            foreach (var loc in locations)
-            {
-                context.RouteDetails.AddOrUpdate(new RouteDetail { RouteID = route.RouteID, LocationID = loc.LocationID, Position = i++ });
-            }
-        }
+        //public void AddLocationsToRoute(TransitSystem.DAL.TransitContext context, Route route, List<Location> locations)
+        //{
+        //    byte i = 0;
+        //    foreach (var loc in locations)
+        //    {
+        //        context.RouteDetails.AddOrUpdate(new RouteDetail { RouteID = route.RouteID, LocationID = loc.LocationID, Position = i++ });
+        //    }
+        //}
+        //public void AddLocations(IEnumerable<Location> locations)
+        //{
+        //    byte i = 0;
+        //    foreach (var loc in locations)
+        //    {
+        //        RouteDetails.Add(new RouteDetail { RouteID = RouteID, LocationID = loc.LocationID, Position = i++ });
+        //    }
+        //}
+
+        //public void RemoveLocations()
+        //{
+        //    RouteDetail[] details = new RouteDetail[RouteDetails.Count];
+        //    RouteDetails.CopyTo(details, 0);
+        //    foreach (var detail in details)
+        //    {
+        //        RouteDetails.Remove(detail);
+        //    }
+        //}
     }
 }
