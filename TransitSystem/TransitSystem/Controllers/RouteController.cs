@@ -30,7 +30,7 @@ namespace TransitSystem.Controllers
                 
             }
 
-            return View(db.Routes.ToList());
+            return View(viewModel);
         }
 
         // GET: Route/Details/5

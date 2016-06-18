@@ -1,7 +1,7 @@
-﻿@model IEnumerable<TransitSystem.Models.Route>
+﻿@model TransitSystem.ViewModels.RouteIndexData
 
 @{
-    ViewBag.Title = "Routes";
+    ViewBag.Title = "Index";
 }
 
 <h2>Route Manager</h2>
@@ -11,13 +11,11 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.RouteName)
-        </th>
+        <th>Route Name</th>
         <th></th>
     </tr>
 
-@foreach (var item in Model)
+@foreach (var item in Model.Routes)
 {
     string selectedRow = "";
     if (item.RouteID == ViewBag.RouteID)
@@ -38,3 +36,37 @@
 }
 
 </table>
+
+
+@if (Model.Locations != null)
+{
+    <h3>Locations Visited by Route</h3>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Address</th>
+        </tr>
+
+        @foreach (var item in Model.Locations)
+        {
+            string selectedRow = "";
+            if (item.LocationID == ViewBag.LocationID)
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.ActionLink("Select", "Index", new { locationID = item.LocationID })
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Address
+                </td>
+            </tr>
+        }
+
+    </table>
+}
