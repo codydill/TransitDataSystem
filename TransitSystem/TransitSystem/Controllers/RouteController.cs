@@ -26,7 +26,7 @@ namespace TransitSystem.Controllers
             {
                 ViewBag.RouteId = ID.Value;
                 viewModel.Locations = viewModel.Routes.Where(r => r.RouteID == ID.Value).Single()
-                                    .RouteDetails.OrderBy(l => l.Position).Select(r => r.Location);
+                                    .RouteDetails.OrderBy(l => l.Position).Select(r => r.Location); //ToDo: Test for position ordering.
                 
             }
 
@@ -78,12 +78,30 @@ namespace TransitSystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Route route = db.Routes.Find(id);
+            Route route = db.Routes.Include(r => r.RouteDetails).Where(r => r.RouteID == id).Single();
+            PopulateAssignedLocationsData(route);
             if (route == null)
             {
                 return HttpNotFound();
             }
             return View(route);
+        }
+
+        private void PopulateAssignedLocationsData(Route route)
+        {
+            var allLocations = db.Locations;
+            var routeLocations = new HashSet<int>(route.RouteDetails.Select(l => l.LocationID));
+            var viewModel = new List<AssignedLocationData>();
+            foreach (var loc in allLocations)
+            {
+                viewModel.Add(new AssignedLocationData
+                {
+                    LocationId = loc.LocationID,
+                    Name = loc.Name,
+                    Assigned = routeLocations.Contains(loc.LocationID)
+                });
+            }
+            ViewBag.Locations = viewModel;
         }
 
         // POST: Route/Edit/5

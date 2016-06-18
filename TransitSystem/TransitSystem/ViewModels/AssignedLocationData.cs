@@ -5,7 +5,7 @@ using System.Web;
 
 namespace TransitSystem.ViewModels
 {
-    public class AssignedLocationsData
+    public class AssignedLocationData
     {
         public int LocationId { get; set; }
         public string Name { get; set; }

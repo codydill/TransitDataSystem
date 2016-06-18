@@ -149,7 +149,7 @@
     <Compile Include="Models\OnBoardDetail.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\AssignedLocationsData.cs" />
+    <Compile Include="ViewModels\AssignedLocationData.cs" />
     <Compile Include="ViewModels\RouteIndexData.cs" />
   </ItemGroup>
   <ItemGroup>
