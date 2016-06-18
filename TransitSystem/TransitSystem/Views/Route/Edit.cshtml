@@ -24,6 +24,33 @@
                 @Html.ValidationMessageFor(model => model.RouteName, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <table>
+                    <tr>
+                        @{
+                            int cnt = 0;
+                            List<TransitSystem.ViewModels.AssignedLocationData> locations = ViewBag.Locations;
+
+                            foreach (var loc in locations)
+                            {
+                                if (cnt++ % 3 == 0)
+                                {
+                                    @:</tr><tr>
+                                }
+                                @:<td>
+                                    <input type="checkbox"
+                                           name="selectedCourses"
+                                           value="@loc.LocationId"
+                                           @(Html.Raw(loc.Assigned ? "checked=\"checked\"" : "")) />
+                                        @loc.LocationId @:  @loc.Name
+                                 @:</td>
+                            }
+                            @:</tr>
+                        }
+                    </table>
+                </div>
+            </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

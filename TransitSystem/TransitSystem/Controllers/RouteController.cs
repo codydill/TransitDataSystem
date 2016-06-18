@@ -109,15 +109,23 @@ namespace TransitSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RouteID,RouteName")] Route route)
+        public ActionResult Edit(int? id, string[] selectedLocations)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Route routeToUpdate = db.Routes.Where(r => r.RouteID == id).Single();
+
             if (ModelState.IsValid)
             {
                 db.Entry(route).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(route);
+            PopulateAssignedLocationsData(routeToUpdate);
+            return View(routeToUpdate);
         }
 
         // GET: Route/Delete/5
