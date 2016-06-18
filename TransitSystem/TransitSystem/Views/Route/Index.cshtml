@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<TransitSystem.Models.Route>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Routes";
 }
 
-<h2>Index</h2>
+<h2>Route Manager</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add New Route", "Create")
 </p>
 <table class="table">
     <tr>
@@ -17,12 +17,19 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
+@foreach (var item in Model)
+{
+    string selectedRow = "";
+    if (item.RouteID == ViewBag.RouteID)
+    {
+        selectedRow = "success";
+    }
+    <tr class="@selectedRow">
         <td>
             @Html.DisplayFor(modelItem => item.RouteName)
         </td>
         <td>
+            @Html.ActionLink("Select", "Index", new { id = item.RouteID }) |
             @Html.ActionLink("Edit", "Edit", new { id=item.RouteID }) |
             @Html.ActionLink("Details", "Details", new { id=item.RouteID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.RouteID })
