@@ -142,7 +142,10 @@ namespace TransitSystem.Controllers
         {
             if (selectedLocations == null)
             {
-                routeToUpdate.RouteDetails = new List<RouteDetail>();
+                foreach (var detail in routeToUpdate.RouteDetails.ToList())
+                {
+                    db.RouteDetails.Remove(detail);
+                }
                 return;
             }
             var selectedLocationsHS = new HashSet<string>(selectedLocations);
@@ -153,16 +156,18 @@ namespace TransitSystem.Controllers
                 {
                     if (!routeLocationsHS.Contains(loc.LocationID))
                     {
-                        routeToUpdate.RouteDetails.Add(new RouteDetail
-                        { LocationID = loc.LocationID, RouteID = routeToUpdate.RouteID, Position = 0 });
+                        db.RouteDetails.Add(new RouteDetail
+                            { LocationID = loc.LocationID, RouteID = routeToUpdate.RouteID, Position = 0 });
+                        //    routeToUpdate.RouteDetails.Add(new RouteDetail
+                        //    { LocationID = loc.LocationID, RouteID = routeToUpdate.RouteID, Position = 0 });
                     }
                 }
                 else
                 {
                     if (routeLocationsHS.Contains(loc.LocationID))
                     {
-                        var detailToRemove = routeToUpdate.RouteDetails.Where(l => l.LocationID == loc.LocationID).Single();
-                        routeToUpdate.RouteDetails.Remove(detailToRemove);
+                        var detailToRemove = routeToUpdate.RouteDetails.Where(d => d.LocationID == loc.LocationID && d.RouteID == routeToUpdate.RouteID).Single();
+                        db.RouteDetails.Remove(detailToRemove);
                     }
                 }
             }
