@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -116,16 +117,56 @@ namespace TransitSystem.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Route routeToUpdate = db.Routes.Where(r => r.RouteID == id).Single();
+            Route routeToUpdate = db.Routes.Include(r => r.RouteDetails).Where(r => r.RouteID == id).Single();
 
-            if (ModelState.IsValid)
+            if (TryUpdateModel(routeToUpdate, "", new string[] { "RouteName" }))
             {
-                db.Entry(route).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    UpdateRouteLocations(routeToUpdate, selectedLocations);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+
+                }
+                catch (RetryLimitExceededException)
+                {
+
+                    ModelState.AddModelError("", "Unable to save.");
+                }
             }
             PopulateAssignedLocationsData(routeToUpdate);
             return View(routeToUpdate);
+        }
+
+        private void UpdateRouteLocations(Route routeToUpdate, string[] selectedLocations)
+        {
+            if (selectedLocations == null)
+            {
+                routeToUpdate.RouteDetails = new List<RouteDetail>();
+                return;
+            }
+            var selectedLocationsHS = new HashSet<string>(selectedLocations);
+            var routeLocationsHS = new HashSet<int>(routeToUpdate.RouteDetails.Select(d => d.LocationID));
+            foreach (var loc in db.Locations)
+            {
+                if (selectedLocationsHS.Contains(loc.LocationID.ToString()))
+                {
+                    if (!routeLocationsHS.Contains(loc.LocationID))
+                    {
+                        routeToUpdate.RouteDetails.Add(new RouteDetail
+                        { LocationID = loc.LocationID, RouteID = routeToUpdate.RouteID, Position = 0 });
+                    }
+                }
+                else
+                {
+                    if (routeLocationsHS.Contains(loc.LocationID))
+                    {
+                        var detailToRemove = routeToUpdate.RouteDetails.Where(l => l.LocationID == loc.LocationID).Single();
+                        routeToUpdate.RouteDetails.Remove(detailToRemove);
+                    }
+                }
+            }
+
         }
 
         // GET: Route/Delete/5
