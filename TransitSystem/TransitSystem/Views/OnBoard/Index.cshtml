@@ -1,0 +1,45 @@
+﻿@model IEnumerable<TransitSystem.Models.OnBoard>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Location.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Route.RouteName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OnBoardTimeStamp)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Route.RouteName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OnBoardTimeStamp)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.OnBoardID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.OnBoardID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.OnBoardID })
+        </td>
+    </tr>
+}
+
+</table>
