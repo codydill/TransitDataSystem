@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using TransitSystem.DAL;
 using TransitSystem.Models;
+using TransitSystem.ViewModels;
 
 namespace TransitSystem.Controllers
 {
@@ -16,10 +17,20 @@ namespace TransitSystem.Controllers
         private TransitContext db = new TransitContext();
 
         // GET: OnBoard
-        public ActionResult Index()
+        public ActionResult Index(int? ID)
         {
-            var onBoards = db.OnBoards.Include(o => o.Location).Include(o => o.Route);
-            return View(onBoards.ToList());
+            OnBoardIndexData viewModel = new OnBoardIndexData();
+            viewModel.CurrentTags = db.Tags.Where(t => t.Current == true);
+            viewModel.Routes = db.Routes;
+
+            if (ID != null)
+            {
+                viewModel.RouteLocations = viewModel.Routes.Where(r => r.RouteID == ID.Value).Single()
+                                    .RouteDetails.OrderBy(l => l.Position).Select(r => r.Location);
+            }
+            ViewBag.RouteId = new SelectList(viewModel.Routes, "RouteID", "RouteName", ID.Value);
+
+            return View(viewModel);
         }
 
         // GET: OnBoard/Details/5
