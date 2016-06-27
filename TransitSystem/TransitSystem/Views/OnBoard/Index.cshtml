@@ -7,39 +7,66 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add New Route", "Create")
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Location.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Route.RouteName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OnBoardTimeStamp)
-        </th>
+        <th>Route Name</th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Location.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Route.RouteName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OnBoardTimeStamp)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.OnBoardID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.OnBoardID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.OnBoardID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.Routes)
+    {
+        string selectedRow = "";
+        if (item.RouteID == ViewBag.RouteID)
+        {
+            selectedRow = "success";
+        }
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.RouteName)
+            </td>
+            <td>
+                @Html.ActionLink("Select", "Index", new { id = item.RouteID }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.RouteID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.RouteID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.RouteID })
+            </td>
+        </tr>
+    }
 
 </table>
+
+
+@if (Model.RouteLocations != null)
+{
+    <h3>Locations Visited by Route</h3>
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Address</th>
+        </tr>
+
+        @foreach (var item in Model.RouteLocations)
+        {
+            string selectedRow = "";
+            if (item.LocationID == ViewBag.LocationID)
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.ActionLink("Select", "Index", new { locationID = item.LocationID })
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Address
+                </td>
+            </tr>
+        }
+
+    </table>
+}

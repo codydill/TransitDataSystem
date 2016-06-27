@@ -28,7 +28,7 @@ namespace TransitSystem.Controllers
                 viewModel.RouteLocations = viewModel.Routes.Where(r => r.RouteID == ID.Value).Single()
                                     .RouteDetails.OrderBy(l => l.Position).Select(r => r.Location);
             }
-            ViewBag.RouteId = new SelectList(viewModel.Routes, "RouteID", "RouteName", ID.Value);
+            //ViewBag.RouteId = new SelectList(viewModel.Routes, "RouteID", "RouteName", ID.Value);
 
             return View(viewModel);
         }
