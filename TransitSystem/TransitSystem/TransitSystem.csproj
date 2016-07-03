@@ -131,6 +131,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\OnBoardController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RouteController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="DAL\TransitContext.cs" />
