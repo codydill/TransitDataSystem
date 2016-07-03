@@ -11,7 +11,8 @@ namespace TransitSystem.Controllers
         // GET: Report
         public ActionResult Index()
         {
-            return Redirect("Enter Web Portal URL Address Here.");
+            //Enter Web Portal URL Address Here.
+            return Redirect("");
         }
     }
 }
