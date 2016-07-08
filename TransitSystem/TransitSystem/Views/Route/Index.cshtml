@@ -36,18 +36,30 @@
 }
 
 </table>
-
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+        $('#sortable').sortable({
+            helper: fixWidthHelper
+        }).disableSelection();
+    
+        function fixWidthHelper(e, ui) {
+            ui.children().each(function () {
+                $(this).width($(this).width());
+            });
+            return ui;
+        }})
+</script>
 
 @if (Model.Locations != null)
 {
     <h3>Locations Visited by Route</h3>
     <table class="table">
         <tr>
-            <th></th>
             <th>Name</th>
             <th>Address</th>
         </tr>
-
+        <tbody id="sortable">
         @foreach (var item in Model.Locations)
         {
             string selectedRow = "";
@@ -57,9 +69,6 @@
             }
             <tr class="@selectedRow">
                 <td>
-                    @Html.ActionLink("Select", "Index", new { locationID = item.LocationID })
-                </td>
-                <td>
                     @item.Name
                 </td>
                 <td>
@@ -67,6 +76,8 @@
                 </td>
             </tr>
         }
+        </tbody>
+
 
     </table>
 }
