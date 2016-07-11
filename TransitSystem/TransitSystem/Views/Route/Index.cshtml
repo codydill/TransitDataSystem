@@ -53,6 +53,8 @@
 
 @if (Model.Locations != null)
 {
+    using (Html.BeginForm())
+    {
     <h3>Locations Visited by Route</h3>
     <table class="table">
         <tr>
@@ -70,6 +72,9 @@
             <tr class="@selectedRow">
                 <td>
                     @item.Name
+                    <input type="hidden"
+                           name="orderedLocations"
+                           value="@item.LocationID" />
                 </td>
                 <td>
                     @item.Address
@@ -80,4 +85,10 @@
 
 
     </table>
-}
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save Order" class="btn btn-default" />
+        </div>
+    </div>
+        }
+    }

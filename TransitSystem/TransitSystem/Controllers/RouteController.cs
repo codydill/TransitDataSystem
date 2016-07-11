@@ -27,12 +27,49 @@ namespace TransitSystem.Controllers
             {
                 ViewBag.RouteId = ID.Value;
                 viewModel.Locations = viewModel.Routes.Where(r => r.RouteID == ID.Value).Single()
-                                    .RouteDetails.OrderBy(l => l.Position).Select(r => r.Location); //ToDo: Test for position ordering.
+                                    .RouteDetails.OrderBy(l => l.Position).Select(r => r.Location);
                 
             }
 
             return View(viewModel);
         }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult Index(int? id, string[] orderedLocations)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Route routeToUpdate = db.Routes.Include(r => r.RouteDetails).Where(r => r.RouteID == id).Single();
+            if (TryUpdateModel(routeToUpdate, "", new string[] { "RouteName" }) && orderedLocations != null)
+            {
+                try
+                {
+                    UpdateRouteLocationOrder(routeToUpdate, orderedLocations);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (RetryLimitExceededException)
+                {
+
+                    ModelState.AddModelError("", "Unable to save.");
+                }
+            }
+            return View(routeToUpdate);
+        }
+
+        private void UpdateRouteLocationOrder(Route route, string[] orderedLocations)
+        {
+            for (int i = 0; i < orderedLocations.Length; i++)
+            {
+                RouteDetail detailToUpdate = route.RouteDetails.Where(r => r.LocationID.ToString() == orderedLocations[i]).Single();
+                detailToUpdate.Position = (byte)i;
+            }
+        }
+
 
         // GET: Route/Details/5
         public ActionResult Details(int? id)
@@ -126,7 +163,6 @@ namespace TransitSystem.Controllers
                     UpdateRouteLocations(routeToUpdate, selectedLocations);
                     db.SaveChanges();
                     return RedirectToAction("Index");
-
                 }
                 catch (RetryLimitExceededException)
                 {
@@ -158,8 +194,6 @@ namespace TransitSystem.Controllers
                     {
                         db.RouteDetails.Add(new RouteDetail
                             { LocationID = loc.LocationID, RouteID = routeToUpdate.RouteID, Position = 0 });
-                        //    routeToUpdate.RouteDetails.Add(new RouteDetail
-                        //    { LocationID = loc.LocationID, RouteID = routeToUpdate.RouteID, Position = 0 });
                     }
                 }
                 else
