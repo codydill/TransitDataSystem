@@ -27,8 +27,8 @@
             @Html.DisplayFor(modelItem => item.RouteName)
         </td>
         <td>
-            @Html.ActionLink("Select", "Index", new { id = item.RouteID }) |
-            @Html.ActionLink("Edit", "Edit", new { id=item.RouteID }) |
+            @Html.ActionLink("Change Location Order", "Index", new { id = item.RouteID }) |
+            @Html.ActionLink("Add/Remove Locations", "Edit", new { id=item.RouteID }) |
             @Html.ActionLink("Details", "Details", new { id=item.RouteID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.RouteID })
         </td>
