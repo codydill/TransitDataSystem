@@ -6,9 +6,9 @@ using TransitSystem.Models;
 
 namespace TransitSystem.ViewModels
 {
-    public class OnBoardIndexData
+    public class OnBoardRouteData
     {
-        public IEnumerable<Route> Routes { get; set; }
+        public Route SelectedRoute { get; set; }
         public IEnumerable<Tag> CurrentTags { get; set; }
         public IEnumerable<Location> RouteLocations { get; set; }
     }

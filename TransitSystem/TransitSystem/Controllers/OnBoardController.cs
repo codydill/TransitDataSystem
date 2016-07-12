@@ -17,50 +17,32 @@ namespace TransitSystem.Controllers
         private TransitContext db = new TransitContext();
 
         // GET: OnBoard
-        public ActionResult Index(int? ID)
+        public ActionResult Index()
         {
-            OnBoardIndexData viewModel = new OnBoardIndexData();
-            viewModel.CurrentTags = db.Tags.Where(t => t.Current == true);
-            viewModel.Routes = db.Routes;
-
-            if (ID != null)
-            {
-                viewModel.RouteLocations = viewModel.Routes.Where(r => r.RouteID == ID.Value).Single()
-                                    .RouteDetails.OrderBy(l => l.Position).Select(r => r.Location);
-            }
-            //ViewBag.RouteId = new SelectList(viewModel.Routes, "RouteID", "RouteName", ID.Value);
-
-            return View(viewModel);
+            return View(db.Routes.ToList());
         }
 
-        // GET: OnBoard/Details/5
-        public ActionResult Details(int? id)
+
+        // GET: OnBoard/Create
+        public ActionResult Create(int? ID)
         {
-            if (id == null)
+            if (ID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OnBoard onBoard = db.OnBoards.Find(id);
-            if (onBoard == null)
-            {
-                return HttpNotFound();
-            }
-            return View(onBoard);
-        }
-
-        // GET: OnBoard/Create
-        public ActionResult Create()
-        {
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Name");
-            ViewBag.RouteID = new SelectList(db.Routes, "RouteID", "RouteName");
-            return View();
+            OnBoardRouteData viewModel = new OnBoardRouteData();
+            viewModel.SelectedRoute = db.Routes.Where(r => r.RouteID == ID.Value).Single();
+            viewModel.CurrentTags = db.Tags.Where(t => t.Current == true);
+            viewModel.RouteLocations = db.Routes.Where(r => r.RouteID == ID.Value).Single()
+                                    .RouteDetails.OrderBy(l => l.Position).Select(r => r.Location);
+            return View(viewModel);
         }
 
         // POST: OnBoard/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "OnBoardID,LocationID,RouteID,OnBoardTimeStamp")] OnBoard onBoard)
         {
             if (ModelState.IsValid)
@@ -75,66 +57,7 @@ namespace TransitSystem.Controllers
             return View(onBoard);
         }
 
-        // GET: OnBoard/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            OnBoard onBoard = db.OnBoards.Find(id);
-            if (onBoard == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Name", onBoard.LocationID);
-            ViewBag.RouteID = new SelectList(db.Routes, "RouteID", "RouteName", onBoard.RouteID);
-            return View(onBoard);
-        }
 
-        // POST: OnBoard/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "OnBoardID,LocationID,RouteID,OnBoardTimeStamp")] OnBoard onBoard)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(onBoard).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Name", onBoard.LocationID);
-            ViewBag.RouteID = new SelectList(db.Routes, "RouteID", "RouteName", onBoard.RouteID);
-            return View(onBoard);
-        }
-
-        // GET: OnBoard/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            OnBoard onBoard = db.OnBoards.Find(id);
-            if (onBoard == null)
-            {
-                return HttpNotFound();
-            }
-            return View(onBoard);
-        }
-
-        // POST: OnBoard/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            OnBoard onBoard = db.OnBoards.Find(id);
-            db.OnBoards.Remove(onBoard);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
         protected override void Dispose(bool disposing)
         {

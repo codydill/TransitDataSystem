@@ -152,7 +152,7 @@
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AssignedLocationData.cs" />
-    <Compile Include="ViewModels\OnBoardIndexData.cs" />
+    <Compile Include="ViewModels\OnBoardRouteData.cs" />
     <Compile Include="ViewModels\RouteIndexData.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -241,9 +241,6 @@
     <Content Include="Views\Route\Edit.cshtml" />
     <Content Include="Views\Route\Index.cshtml" />
     <Content Include="Views\OnBoard\Create.cshtml" />
-    <Content Include="Views\OnBoard\Delete.cshtml" />
-    <Content Include="Views\OnBoard\Details.cshtml" />
-    <Content Include="Views\OnBoard\Edit.cshtml" />
     <Content Include="Views\OnBoard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

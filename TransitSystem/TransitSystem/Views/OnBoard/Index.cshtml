@@ -1,36 +1,26 @@
-﻿@model TransitSystem.ViewModels.OnBoardIndexData
+﻿@model IEnumerable< TransitSystem.Models.Route>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Select a Route</h2>
 
-<p>
-    @Html.ActionLink("Add New Route", "Create")
-</p>
 <table class="table">
     <tr>
-        <th>Route Name</th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.RouteName)
+        </th>
     </tr>
 
-    @foreach (var item in Model.Routes)
+    @foreach (var item in Model)
     {
-        string selectedRow = "";
-        if (item.RouteID == ViewBag.RouteID)
-        {
-            selectedRow = "success";
-        }
-        <tr class="@selectedRow">
+        <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.RouteName)
             </td>
             <td>
-                @Html.ActionLink("Select", "Index", new { id = item.RouteID }) |
-                @Html.ActionLink("Edit", "Edit", new { id = item.RouteID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.RouteID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.RouteID })
+                @Html.ActionLink("Start Route", "Create", new { id = item.RouteID })
             </td>
         </tr>
     }
@@ -38,35 +28,3 @@
 </table>
 
 
-@if (Model.RouteLocations != null)
-{
-    <h3>Locations Visited by Route</h3>
-    <table class="table">
-        <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Address</th>
-        </tr>
-
-        @foreach (var item in Model.RouteLocations)
-        {
-            string selectedRow = "";
-            if (item.LocationID == ViewBag.LocationID)
-            {
-                selectedRow = "success";
-            }
-            <tr class="@selectedRow">
-                <td>
-                    @Html.ActionLink("Select", "Index", new { locationID = item.LocationID })
-                </td>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @item.Address
-                </td>
-            </tr>
-        }
-
-    </table>
-}
