@@ -5,7 +5,25 @@
 }
 
 <h2>@Model.SelectedRoute.RouteName</h2>
-<table class="table">
+<div id="accordion">
+    @foreach (var loc in Model.RouteLocations)
+    {
+        <h4>@Html.DisplayFor(modelItem => loc.Name)</h4>
+        <ul>
+            @foreach (var tag in Model.CurrentTags)
+            {
+                <li>@Html.DisplayFor(modelItem => tag.Description)</li>
+            }
+        </ul>
+    }
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#accordion').accordion();
+    });
+</script>
+
+@*<table class="table">
     <tr>
         <th>Location</th>
         <th>Passengers</th>
@@ -28,11 +46,7 @@
             </tr>
         }
     </tbody>
-</table>
-@foreach (var item in Model.RouteLocations)
-{
-
-}
+</table>*@
 
 <div>
     @Html.ActionLink("Back to Route List", "Index")

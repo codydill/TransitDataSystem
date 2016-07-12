@@ -32,9 +32,9 @@ namespace TransitSystem
                         "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
-                        "~/Content/themes/base/jquery.ui.core.css",
-                        "~/Content/themes/base/jquery.ui.sortable.css",
-                        "~/Content/themes/base/jquery.ui.theme.css"));
+                        "~/Content/themes/base/core.css",
+                        "~/Content/themes/base/accordion.css",
+                        "~/Content/themes/base/theme.css"));
 
         }
     }
