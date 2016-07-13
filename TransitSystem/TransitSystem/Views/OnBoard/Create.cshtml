@@ -5,21 +5,38 @@
 }
 
 <h2>@Model.SelectedRoute.RouteName</h2>
+<style>
+ul#tagBlock li {
+    font-size:small;
+    font-weight:600;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+</style>
 <div id="accordion">
     @foreach (var loc in Model.RouteLocations)
     {
         <h4>@Html.DisplayFor(modelItem => loc.Name)</h4>
-        <ul>
+        <div>
+            <ul id="tagBlock" style="list-style-type:none">
             @foreach (var tag in Model.CurrentTags)
             {
-                <li>@Html.DisplayFor(modelItem => tag.Description)</li>
+                <li>
+                <input type="number" min="0" max="255" style="width:50px"/>
+                 @Html.DisplayFor(modelItem => tag.Description)
+                </li>
             }
-        </ul>
+            </ul>
+            <input type="submit" value="Set" class="btn btn-default" />
+        </div>
     }
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#accordion').accordion();
+        $('#accordion').accordion({
+            heightStyle: "content"
+        });
     });
 </script>
 
