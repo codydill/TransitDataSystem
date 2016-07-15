@@ -30,11 +30,30 @@ namespace TransitSystem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OnBoardRouteData viewModel = new OnBoardRouteData();
-            viewModel.SelectedRoute = db.Routes.Where(r => r.RouteID == ID.Value).Single();
-            viewModel.CurrentTags = db.Tags.Where(t => t.Current == true);
-            viewModel.RouteLocations = db.Routes.Where(r => r.RouteID == ID.Value).Single()
-                                    .RouteDetails.OrderBy(l => l.Position).Select(r => r.Location);
+            RouteDetailData viewModel = new RouteDetailData();
+
+            Route currentRoute = db.Routes.Where(r => r.RouteID == ID.Value).Single();
+            List<Tag> currentTags = db.Tags.Where(t => t.Current == true).ToList();
+            List<Location> routeLocations = db.Routes.Where(r => r.RouteID == ID.Value).Single()
+                                    .RouteDetails.OrderBy(l => l.Position).Select(r => r.Location).ToList();
+
+            viewModel.SelectedRoute = currentRoute;
+            viewModel.Groups = new List<DetailGroup>();
+            foreach (var loc in routeLocations)
+            {
+                OnBoard onBoard = new OnBoard() { Location = loc, Route = currentRoute };
+                db.OnBoards.Add(onBoard);
+                //add onboard to viewmodel.
+                DetailGroup detailGroup = new DetailGroup() { GroupLocation = loc, GroupDetails = new List<OnBoardDetail>()};
+                viewModel.Groups.Add(detailGroup);
+                foreach (var tag in currentTags)
+                {
+                    OnBoardDetail detail = new OnBoardDetail() { Tag = tag, Count = 0, OnBoard = onBoard };
+                    db.OnBoardDetails.Add(detail);
+                    detailGroup.GroupDetails.Add(detail);
+                }
+            }
+            db.SaveChanges();
             return View(viewModel);
         }
 
@@ -43,18 +62,28 @@ namespace TransitSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OnBoardID,LocationID,RouteID,OnBoardTimeStamp")] OnBoard onBoard)
+        public ActionResult Create(RouteDetailData routeData)
         {
+            //OnBoardDetail det = new OnBoardDetail();
+            //db.OnBoardDetails.Attach(det);
+            //db.Entry(det).Property(d => d.Count).IsModified = true;
+            //db.SaveChanges();
+
             if (ModelState.IsValid)
             {
-                db.OnBoards.Add(onBoard);
+                foreach (var group in routeData.Groups)
+                {
+                    foreach (var detail in group.GroupDetails)
+                    {
+                        db.OnBoardDetails.Attach(detail);
+                        db.Entry(detail).Property(d => d.Count).IsModified = true;
+                    }
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.LocationID = new SelectList(db.Locations, "LocationID", "Name", onBoard.LocationID);
-            ViewBag.RouteID = new SelectList(db.Routes, "RouteID", "RouteName", onBoard.RouteID);
-            return View(onBoard);
+            return View(routeData);
         }
 
 
