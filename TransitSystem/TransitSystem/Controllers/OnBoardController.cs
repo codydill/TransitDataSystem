@@ -39,11 +39,13 @@ namespace TransitSystem.Controllers
 
             viewModel.SelectedRoute = currentRoute;
             viewModel.Groups = new List<DetailGroup>();
+
+            List<OnBoard> onBoardsToAdd = new List<OnBoard>();
             foreach (var loc in routeLocations)
             {
                 OnBoard onBoard = new OnBoard() { Location = loc, Route = currentRoute };
                 db.OnBoards.Add(onBoard);
-                //add onboard to viewmodel.
+                onBoardsToAdd.Add(onBoard);
                 DetailGroup detailGroup = new DetailGroup() { GroupLocation = loc, GroupDetails = new List<OnBoardDetail>()};
                 viewModel.Groups.Add(detailGroup);
                 foreach (var tag in currentTags)
@@ -53,37 +55,57 @@ namespace TransitSystem.Controllers
                     detailGroup.GroupDetails.Add(detail);
                 }
             }
+            for (int i = 0; i < viewModel.Groups.Count; i++)
+            {
+                viewModel.Groups[i].OnBoardItem = onBoardsToAdd[i];
+            }
             db.SaveChanges();
             return View(viewModel);
         }
 
         // POST: OnBoard/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(RouteDetailData routeData)
+        public ActionResult Create(RouteDetailData routeData, string Command)
         {
-            //OnBoardDetail det = new OnBoardDetail();
-            //db.OnBoardDetails.Attach(det);
-            //db.Entry(det).Property(d => d.Count).IsModified = true;
-            //db.SaveChanges();
-
             if (ModelState.IsValid)
             {
-                foreach (var group in routeData.Groups)
+                if (Command != "Save and Reset")
                 {
-                    foreach (var detail in group.GroupDetails)
+                    int onBoardId = int.Parse(Command);
+                    foreach (var group in routeData.Groups)
                     {
-                        db.OnBoardDetails.Attach(detail);
-                        db.Entry(detail).Property(d => d.Count).IsModified = true;
+                        if (group.OnBoardItem.OnBoardID == onBoardId && group.IsSet == false)
+                        {
+                            group.IsSet = true;
+                            OnBoard updateOnBoard = db.OnBoards.Find(onBoardId);
+                            updateOnBoard.OnBoardTimeStamp = DateTime.Now;
+                            db.OnBoards.Attach(updateOnBoard);
+                            db.Entry(updateOnBoard).Property(p => p.OnBoardTimeStamp).IsModified = true;
+                            break;
+                        }
                     }
+                    db.SaveChanges();
+                    ModelState.Clear();
+                    return View(routeData);
+                }
+                else
+                {
+                    foreach (var group in routeData.Groups)
+                    {
+                        foreach (var detail in group.GroupDetails)
+                        {
+                            OnBoardDetail updateDetail = db.OnBoardDetails.Find(detail.DetailsID);
+                            db.OnBoardDetails.Attach(updateDetail);
+                            updateDetail.Count = detail.Count;
+                            db.Entry(updateDetail).Property(d => d.Count).IsModified = true;
+                        }
+                    }
+
                 }
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
-
-            return View(routeData);
+            return RedirectToAction("Create", routeData.SelectedRoute.RouteID);
         }
 
 

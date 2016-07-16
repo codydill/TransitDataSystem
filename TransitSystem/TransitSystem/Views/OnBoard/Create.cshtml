@@ -16,11 +16,16 @@ ul#tagBlock li {
 </style>
 @using (Html.BeginForm())
 {
+@Html.HiddenFor(m => m.SelectedRoute.RouteName)
+@Html.HiddenFor(m => m.SelectedRoute.RouteID)
 <div id="accordion">
     @for (int i = 0; i < Model.Groups.Count; i++)
     {
         <h4>@Html.DisplayFor(m => m.Groups[i].GroupLocation.Name)</h4>
         <div>
+            @Html.HiddenFor(m => m.Groups[i].OnBoardItem.OnBoardID)
+            @Html.HiddenFor(m => m.Groups[i].IsSet)
+            @Html.HiddenFor(m => m.Groups[i].GroupLocation.Name)
             <ul id="tagBlock" style="list-style-type:none">
             @for (int j = 0; j < Model.Groups[i].GroupDetails.Count; j++)
             {
@@ -29,18 +34,21 @@ ul#tagBlock li {
                 @Html.HiddenFor(m => m.Groups[i].GroupDetails[j].DetailsID)
                 @Html.EditorFor(m => m.Groups[i].GroupDetails[j].Count)
                 @Html.DisplayFor(m => m.Groups[i].GroupDetails[j].Tag.Description)
+                @Html.HiddenFor(m => m.Groups[i].GroupDetails[j].Tag.Description)
                 </li>
             }
             </ul>
+            <button type="submit" name="Command" value=@Model.Groups[i].OnBoardItem.OnBoardID class="btn btn-default">Set</button>
+            @*<input type="submit" name="Command" value="Set" class="btn btn-default" />*@
         </div>
     }
 </div>
-<input type="submit" value="Save and Reset" class="btn btn-default" />
+<input type="submit" name="Command" value="Save and Reset" class="btn btn-default" />
 }
 <script type="text/javascript">
     $(document).ready(function () {
         $('#accordion').accordion({
-            heightStyle: "content"
+            heightStyle: "content",
         });
     });
 </script>
