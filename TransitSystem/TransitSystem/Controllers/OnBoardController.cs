@@ -28,7 +28,7 @@ namespace TransitSystem.Controllers
         {
             if (ID == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Not a Valid Route");
             }
             RouteDetailData viewModel = new RouteDetailData();
 
