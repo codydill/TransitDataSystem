@@ -73,11 +73,13 @@ namespace TransitSystem.Controllers
                 if (Command != "Save and Reset")
                 {
                     int onBoardId = int.Parse(Command);
-                    foreach (var group in routeData.Groups)
+                    for (int i = 0; i < routeData.Groups.Count; i++)
                     {
-                        if (group.OnBoardItem.OnBoardID == onBoardId && group.IsSet == false)
+                        DetailGroup groupItem = routeData.Groups[i];
+                        if (groupItem.OnBoardItem.OnBoardID == onBoardId)
                         {
-                            group.IsSet = true;
+                            routeData.ActiveGroupIndex = (i + 1) % routeData.Groups.Count;
+                            groupItem.IsSet = true;
                             OnBoard updateOnBoard = db.OnBoards.Find(onBoardId);
                             updateOnBoard.OnBoardTimeStamp = DateTime.Now;
                             db.OnBoards.Attach(updateOnBoard);

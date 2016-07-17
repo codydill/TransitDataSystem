@@ -16,6 +16,7 @@ ul#tagBlock li {
 </style>
 @using (Html.BeginForm())
 {
+@Html.HiddenFor(m => m.ActiveGroupIndex)
 @Html.HiddenFor(m => m.SelectedRoute.RouteName)
 @Html.HiddenFor(m => m.SelectedRoute.RouteID)
 <div id="accordion">
@@ -49,6 +50,7 @@ ul#tagBlock li {
     $(document).ready(function () {
         $('#accordion').accordion({
             heightStyle: "content",
+            active: Number(@Model.ActiveGroupIndex)
         });
     });
 </script>

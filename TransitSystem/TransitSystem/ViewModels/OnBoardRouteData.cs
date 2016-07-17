@@ -9,6 +9,7 @@ namespace TransitSystem.ViewModels
     public class RouteDetailData
     {
         public Route SelectedRoute { get; set; }
+        public int ActiveGroupIndex { get; set; }
         public IList<DetailGroup> Groups { get; set; }
     }
 
