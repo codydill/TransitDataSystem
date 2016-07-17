@@ -30,7 +30,6 @@ ul#tagBlock li {
             @for (int j = 0; j < Model.Groups[i].GroupDetails.Count; j++)
             {
                 <li>
-                @*<input type="number" min="0" max="255" style="width:50px"/>*@
                 @Html.HiddenFor(m => m.Groups[i].GroupDetails[j].DetailsID)
                 @Html.EditorFor(m => m.Groups[i].GroupDetails[j].Count)
                 @Html.DisplayFor(m => m.Groups[i].GroupDetails[j].Tag.Description)
@@ -38,8 +37,7 @@ ul#tagBlock li {
                 </li>
             }
             </ul>
-            <button type="submit" name="Command" value=@Model.Groups[i].OnBoardItem.OnBoardID class="btn btn-default">Set</button>
-            @*<input type="submit" name="Command" value="Set" class="btn btn-default" />*@
+            <button type="submit" name="Command" value=@Model.Groups[i].OnBoardItem.OnBoardID class="btn btn-default">Depart Location</button>
         </div>
     }
 </div>
@@ -53,31 +51,6 @@ ul#tagBlock li {
         });
     });
 </script>
-
-@*<table class="table">
-    <tr>
-        <th>Location</th>
-        <th>Passengers</th>
-    </tr>
-    <tbody>
-        @foreach (var loc in Model.RouteLocations)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => loc.Name)</td>
-                @foreach (var tag in Model.CurrentTags)
-                {
-                    <td>
-                        @Html.DisplayFor(modelItem => tag.Description)
-                        <input type="number" min="0" max="255" style="width:50px" />
-                    </td>
-                }
-                <td>
-                    <input type="submit" value="Set" class="btn btn-default" />
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>*@
 
 <div>
     @Html.ActionLink("Back to Route List", "Index")
