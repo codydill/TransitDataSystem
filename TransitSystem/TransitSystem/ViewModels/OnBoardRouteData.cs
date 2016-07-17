@@ -17,7 +17,6 @@ namespace TransitSystem.ViewModels
     {
         public Location GroupLocation { get; set; }
         public OnBoard OnBoardItem { get; set; }
-        public bool IsSet { get; set; }
         public IList<OnBoardDetail> GroupDetails { get; set; }
     }
 }

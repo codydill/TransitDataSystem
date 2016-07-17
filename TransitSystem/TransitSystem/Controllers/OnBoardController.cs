@@ -79,7 +79,6 @@ namespace TransitSystem.Controllers
                         if (groupItem.OnBoardItem.OnBoardID == onBoardId)
                         {
                             routeData.ActiveGroupIndex = (i + 1) % routeData.Groups.Count;
-                            groupItem.IsSet = true;
                             OnBoard updateOnBoard = db.OnBoards.Find(onBoardId);
                             updateOnBoard.OnBoardTimeStamp = DateTime.Now;
                             db.OnBoards.Attach(updateOnBoard);

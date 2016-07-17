@@ -25,7 +25,6 @@ ul#tagBlock li {
         <h4>@Html.DisplayFor(m => m.Groups[i].GroupLocation.Name)</h4>
         <div>
             @Html.HiddenFor(m => m.Groups[i].OnBoardItem.OnBoardID)
-            @Html.HiddenFor(m => m.Groups[i].IsSet)
             @Html.HiddenFor(m => m.Groups[i].GroupLocation.Name)
             <ul id="tagBlock" style="list-style-type:none">
             @for (int j = 0; j < Model.Groups[i].GroupDetails.Count; j++)
