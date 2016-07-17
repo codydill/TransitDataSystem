@@ -37,6 +37,11 @@ namespace TransitSystem.Controllers
             List<Location> routeLocations = db.Routes.Where(r => r.RouteID == ID.Value).Single()
                                     .RouteDetails.OrderBy(l => l.Position).Select(r => r.Location).ToList();
 
+            if (currentTags.Count == 0)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "At Least One Tag Must Be Current.");
+            if (routeLocations.Count == 0)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Route Must Have At Least One Location.");
+
             viewModel.SelectedRoute = currentRoute;
             viewModel.Groups = new List<DetailGroup>();
 
