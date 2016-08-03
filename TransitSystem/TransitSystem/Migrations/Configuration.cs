@@ -16,6 +16,8 @@ namespace TransitSystem.Migrations
 
         protected override void Seed(TransitSystem.DAL.TransitContext context)
         {
+            //Generates generic data for integration testing.
+
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -70,19 +72,6 @@ namespace TransitSystem.Migrations
             AddLocationsToRoute(context, bankRoute, bankLocations);
             context.SaveChanges();
 
-            //Creating OnBoards
-
-            //CreateOnBoardsForAllRoutes(context, DateTime.Today, 5);
-            //context.SaveChanges();
-
-
-
-
-            //context.Dispose();
-            //context = new MyDbContext();
-            //context.Configuration.AutoDetectChangesEnabled = false;
-            //context.Configuration.AutoDetectChangesEnabled = false;
-            //context.Configuration.ValidateOnSaveEnabled = false;
         }
         public void AddLocationsToRoute(TransitSystem.DAL.TransitContext context, Route route, List<Location> locations)
         {
