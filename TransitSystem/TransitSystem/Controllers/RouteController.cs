@@ -38,10 +38,8 @@ namespace TransitSystem.Controllers
         [HttpPost]
         public ActionResult Index(int? id, string[] orderedLocations)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            if (id == null || orderedLocations == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Route Must Exist And Have At Least One Location.");
 
             Route routeToUpdate = db.Routes.Include(r => r.RouteDetails).Where(r => r.RouteID == id).Single();
             if (TryUpdateModel(routeToUpdate, "", new string[] { "RouteName" }) && orderedLocations != null)
