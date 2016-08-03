@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using TransitSystem.DAL;
@@ -72,13 +73,13 @@ namespace TransitSystem.Controllers
 
 
         // GET: Route/Details/5
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Route route = db.Routes.Find(id);
+            Route route = await db.Routes.FindAsync(id);
             if (route == null)
             {
                 return HttpNotFound();
@@ -97,12 +98,12 @@ namespace TransitSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RouteID,RouteName")] Route route)
+        public async Task<ActionResult> Create([Bind(Include = "RouteID,RouteName")] Route route)
         {
             if (ModelState.IsValid)
             {
                 db.Routes.Add(route);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -209,13 +210,13 @@ namespace TransitSystem.Controllers
         }
 
         // GET: Route/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Route route = db.Routes.Find(id);
+            Route route = await db.Routes.FindAsync(id);
             if (route == null)
             {
                 return HttpNotFound();
@@ -226,11 +227,11 @@ namespace TransitSystem.Controllers
         // POST: Route/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Route route = db.Routes.Find(id);
             db.Routes.Remove(route);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 

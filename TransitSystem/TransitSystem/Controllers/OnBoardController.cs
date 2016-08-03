@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using TransitSystem.DAL;
@@ -17,14 +18,14 @@ namespace TransitSystem.Controllers
         private TransitContext db = new TransitContext();
 
         // GET: OnBoard
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(db.Routes.ToList());
+            return View(await db.Routes.ToListAsync());
         }
 
 
         // GET: OnBoard/Create
-        public ActionResult Create(int? ID)
+        public async Task<ActionResult> Create(int? ID)
         {
             if (ID == null)
             {
@@ -64,14 +65,14 @@ namespace TransitSystem.Controllers
             {
                 viewModel.Groups[i].OnBoardItem = onBoardsToAdd[i];
             }
-            db.SaveChanges();
+            await db.SaveChangesAsync();
             return View(viewModel);
         }
 
         // POST: OnBoard/Create
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(RouteDetailData routeData, string Command)
+        public async Task<ActionResult> Create(RouteDetailData routeData, string Command)
         {
             if (ModelState.IsValid)
             {
@@ -84,14 +85,14 @@ namespace TransitSystem.Controllers
                         if (groupItem.OnBoardItem.OnBoardID == onBoardId)
                         {
                             routeData.ActiveGroupIndex = (i + 1) % routeData.Groups.Count;
-                            OnBoard updateOnBoard = db.OnBoards.Find(onBoardId);
+                            OnBoard updateOnBoard = await db.OnBoards.FindAsync(onBoardId);
                             updateOnBoard.OnBoardTimeStamp = DateTime.Now;
                             db.OnBoards.Attach(updateOnBoard);
                             db.Entry(updateOnBoard).Property(p => p.OnBoardTimeStamp).IsModified = true;
                             break;
                         }
                     }
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                     ModelState.Clear();
                     return View(routeData);
                 }
@@ -101,7 +102,7 @@ namespace TransitSystem.Controllers
                     {
                         foreach (var detail in group.GroupDetails)
                         {
-                            OnBoardDetail updateDetail = db.OnBoardDetails.Find(detail.DetailsID);
+                            OnBoardDetail updateDetail = await db.OnBoardDetails.FindAsync(detail.DetailsID);
                             db.OnBoardDetails.Attach(updateDetail);
                             updateDetail.Count = detail.Count;
                             db.Entry(updateDetail).Property(d => d.Count).IsModified = true;
@@ -109,7 +110,7 @@ namespace TransitSystem.Controllers
                     }
 
                 }
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
             return RedirectToAction("Create", routeData.SelectedRoute.RouteID);
         }

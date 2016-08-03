@@ -128,7 +128,7 @@ namespace TransitSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Location location = db.Locations.Find(id);
+            Location location = await db.Locations.FindAsync(id);
             db.Locations.Remove(location);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
