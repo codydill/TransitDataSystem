@@ -71,8 +71,9 @@ namespace TransitSystem.Migrations
             context.SaveChanges();
 
             //Creating OnBoards
-            CreateOnBoardsForAllRoutes(context, DateTime.Today, 5);
-            context.SaveChanges();
+
+            //CreateOnBoardsForAllRoutes(context, DateTime.Today, 5);
+            //context.SaveChanges();
 
 
 

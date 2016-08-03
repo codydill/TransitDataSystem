@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using TransitSystem.DAL;
@@ -16,7 +17,7 @@ namespace TransitSystem.Controllers
         private TransitContext db = new TransitContext();
 
         // GET: Location
-        public ActionResult Index(string sortOrder, string searchString)
+        public async Task<ActionResult> Index(string sortOrder, string searchString)
         {
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             var locations = from l in db.Locations select l;
@@ -35,17 +36,17 @@ namespace TransitSystem.Controllers
                     locations = locations.OrderBy(s => s.Name);
                     break;
             }
-            return View(locations.ToList());
+            return View(await locations.ToListAsync());
         }
 
         // GET: Location/Details/5
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Location location = db.Locations.Find(id);
+            Location location = await db.Locations.FindAsync(id);
             if (location == null)
             {
                 return HttpNotFound();
@@ -64,12 +65,12 @@ namespace TransitSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LocationID,Name,Address")] Location location)
+        public async Task<ActionResult> Create([Bind(Include = "LocationID,Name,Address")] Location location)
         {
             if (ModelState.IsValid)
             {
                 db.Locations.Add(location);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -77,13 +78,13 @@ namespace TransitSystem.Controllers
         }
 
         // GET: Location/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Location location = db.Locations.Find(id);
+            Location location = await db.Locations.FindAsync(id);
             if (location == null)
             {
                 return HttpNotFound();
@@ -96,25 +97,25 @@ namespace TransitSystem.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LocationID,Name,Address")] Location location)
+        public async Task<ActionResult> Edit([Bind(Include = "LocationID,Name,Address")] Location location)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(location).State = EntityState.Modified;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(location);
         }
 
         // GET: Location/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Location location = db.Locations.Find(id);
+            Location location = await db.Locations.FindAsync(id);
             if (location == null)
             {
                 return HttpNotFound();
@@ -125,11 +126,11 @@ namespace TransitSystem.Controllers
         // POST: Location/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Location location = db.Locations.Find(id);
             db.Locations.Remove(location);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
