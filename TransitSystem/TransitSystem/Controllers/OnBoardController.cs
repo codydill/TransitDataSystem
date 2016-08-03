@@ -71,7 +71,6 @@ namespace TransitSystem.Controllers
 
         // POST: OnBoard/Create
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(RouteDetailData routeData, string Command)
         {
             if (ModelState.IsValid)
